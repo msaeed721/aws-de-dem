@@ -48,3 +48,8 @@ resource "aws_s3_object" "scripts" {
   key     = "scripts/"
   content = ""
 }
+resource "aws_glue_catalog_database" "demo" {
+  name = "aws_de_demo"
+
+  description = "Glue catalog database for AWS Data Engineering demo"
+}

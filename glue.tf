@@ -197,3 +197,20 @@ resource "aws_glue_job" "normalize_claims" {
     ManagedBy   = "Terraform"
   }
 }
+
+resource "aws_glue_crawler" "silver_pharmacy_claims" {
+  name          = "silver-pharmacy-claims"
+  database_name = aws_glue_catalog_database.demo.name
+  role          = aws_iam_role.glue_role.arn
+
+  table_prefix = "silver_"
+
+  s3_target {
+    path = "s3://${aws_s3_bucket.data_lake.bucket}/silver/pharmacy_claims/"
+  }
+
+  depends_on = [
+    aws_iam_role_policy_attachment.glue_service,
+    aws_iam_role_policy.glue_s3_access
+  ]
+}

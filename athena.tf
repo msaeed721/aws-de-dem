@@ -1,6 +1,6 @@
 resource "aws_athena_workgroup" "demo" {
-  name = "aws-de-demo"
-
+  name          = "aws-de-demo"
+  force_destroy = true
   configuration {
     enforce_workgroup_configuration    = true
     publish_cloudwatch_metrics_enabled = true

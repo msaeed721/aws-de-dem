@@ -72,6 +72,7 @@ resource "aws_iam_role_policy" "glue_s3_access" {
 
         Resource = [
           "${aws_s3_bucket.data_lake.arn}/bronze/*",
+          "${aws_s3_bucket.data_lake.arn}/silver/*",
           "${aws_s3_bucket.data_lake.arn}/scripts/*"
         ]
       },

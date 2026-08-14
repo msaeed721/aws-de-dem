@@ -1,0 +1,30 @@
+{
+  "customer_id": "customer_b",
+  "file_type": "pharmacy_claims",
+  "format": "csv",
+  "delimiter": ",",
+  "has_header": true,
+
+  "column_mapping": {
+    "rx_claim_number": "claim_id",
+    "subscriber_key": "member_id",
+    "group_code": "plan_id",
+    "service_date": "fill_date",
+    "product_code": "ndc",
+    "medication_description": "drug_name",
+    "dispensed_qty": "quantity",
+    "supply_days": "days_supply",
+    "gross_cost": "total_cost",
+    "payer_amount": "plan_paid",
+    "patient_amount": "member_paid",
+    "status_code": "claim_status"
+  },
+
+  "value_mapping": {
+    "claim_status": {
+      "P": "PAID",
+      "R": "REJECTED",
+      "V": "REVERSED"
+    }
+  }
+}

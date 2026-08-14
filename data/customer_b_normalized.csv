@@ -1,0 +1,4 @@
+claim_id,member_id,plan_id,fill_date,ndc,drug_name,quantity,days_supply,total_cost,plan_paid,member_paid,claim_status
+RX2001,SUB101,GRP-X,2026-08-04,SIM-NDC-0101,Rosuvastatin,30,30,72.5,62.5,10.0,PAID
+RX2002,SUB102,GRP-X,2026-08-04,SIM-NDC-0102,Losartan,30,30,28.4,23.4,5.0,PAID
+RX2003,SUB103,GRP-Y,2026-08-05,SIM-NDC-0103,Pantoprazole,30,30,51.75,41.75,10.0,PAID

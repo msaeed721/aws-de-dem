@@ -25,3 +25,26 @@ resource "aws_s3_bucket_versioning" "data_lake" {
     status = "Enabled"
   }
 }
+resource "aws_s3_object" "bronze" {
+  bucket  = aws_s3_bucket.data_lake.id
+  key     = "bronze/"
+  content = ""
+}
+
+resource "aws_s3_object" "silver" {
+  bucket  = aws_s3_bucket.data_lake.id
+  key     = "silver/"
+  content = ""
+}
+
+resource "aws_s3_object" "gold" {
+  bucket  = aws_s3_bucket.data_lake.id
+  key     = "gold/"
+  content = ""
+}
+
+resource "aws_s3_object" "scripts" {
+  bucket  = aws_s3_bucket.data_lake.id
+  key     = "scripts/"
+  content = ""
+}

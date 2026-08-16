@@ -1,0 +1,6 @@
+rx_claim_number,subscriber_key,group_code,service_date,product_code,medication_description,dispensed_qty,supply_days,gross_cost,payer_amount,patient_amount,status_code,validation_errors
+RX2004,SUB104,GRP-X,2026-08-06,SIM-NDC-0104,Simvastatin,30,30,40.00,30.00,10.00,P,DUPLICATE_CLAIM
+RX2004,SUB104,GRP-X,2026-08-06,SIM-NDC-0104,Simvastatin,30,30,40.00,30.00,10.00,P,DUPLICATE_CLAIM
+RX2005,SUB105,GRP-X,2026-08-06,SIM-NDC-0105,Losartan,-30,30,25.00,20.00,5.00,P,INVALID_QUANTITY
+RX2006,SUB106,GRP-Y,2026-08-07,SIM-NDC-0106,Metformin,30,30,100.00,70.00,20.00,P,COST_RECONCILIATION_ERROR
+RX2007,SUB107,GRP-Y,2026-08-07,SIM-NDC-0107,Amlodipine,30,30,20.00,15.00,5.00,X,INVALID_STATUS

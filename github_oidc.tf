@@ -71,7 +71,9 @@ resource "aws_iam_role_policy" "github_actions" {
 
     Statement = [
 
+      # ------------------------------------------------------
       # Terraform state + demo data lake
+      # ------------------------------------------------------
       {
         Effect = "Allow"
 
@@ -88,7 +90,9 @@ resource "aws_iam_role_policy" "github_actions" {
         ]
       },
 
-      # Services used by this demo
+      # ------------------------------------------------------
+      # AWS services used by this demo
+      # ------------------------------------------------------
       {
         Effect = "Allow"
 
@@ -104,7 +108,9 @@ resource "aws_iam_role_policy" "github_actions" {
         Resource = "*"
       },
 
-      # Manage only IAM roles belonging to this demo
+      # ------------------------------------------------------
+      # Manage IAM roles used by Glue and Lambda
+      # ------------------------------------------------------
       {
         Effect = "Allow"
 
@@ -132,7 +138,30 @@ resource "aws_iam_role_policy" "github_actions" {
         ]
       },
 
-      # Terraform must be able to read the GitHub OIDC configuration
+      # ------------------------------------------------------
+      # Read its own GitHub Actions IAM role
+      #
+      # IMPORTANT:
+      # GitHub can inspect this role during terraform plan,
+      # but cannot modify its own trust policy or permissions.
+      # ------------------------------------------------------
+      {
+        Effect = "Allow"
+
+        Action = [
+          "iam:GetRole",
+          "iam:ListRoleTags",
+          "iam:ListRolePolicies",
+          "iam:GetRolePolicy",
+          "iam:ListAttachedRolePolicies"
+        ]
+
+        Resource = "arn:aws:iam::029633610686:role/github-actions-aws-de-demo"
+      },
+
+      # ------------------------------------------------------
+      # Read GitHub OIDC provider configuration
+      # ------------------------------------------------------
       {
         Effect = "Allow"
 
@@ -147,6 +176,10 @@ resource "aws_iam_role_policy" "github_actions" {
   })
 }
 
+
+# ============================================================
+# OUTPUT
+# ============================================================
 
 output "github_actions_role_arn" {
   value = aws_iam_role.github_actions.arn

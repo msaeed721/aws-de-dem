@@ -1,3 +1,5 @@
+import json
+import os
 import boto3
 import csv
 import io
@@ -6,11 +8,23 @@ from collections import Counter
 from urllib.parse import unquote_plus
 
 s3 = boto3.client("s3")
+secrets = boto3.client("secretsmanager")
+SECRET_NAME = os.environ["CUSTOMER_SECRET_NAME"]
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 
 def lambda_handler(event, context):
+    secret_response = secrets.get_secret_value(
+    SecretId=SECRET_NAME
+    )
+
+    customer_config = json.loads(secret_response["SecretString"])
+
+    logger.info(
+        "Customer configuration loaded securely from Secrets Manager"
+    )
+
 
     for record in event["Records"]:
 

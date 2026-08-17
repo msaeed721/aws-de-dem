@@ -101,6 +101,12 @@ resource "aws_iam_role_policy" "lambda_s3_access" {
 # ============================================================
 
 resource "aws_lambda_function" "batch_validator" {
+  environment {
+    variables = {
+      CUSTOMER_SECRET_NAME = aws_secretsmanager_secret.customer_api.name
+    }
+  }
+
   function_name = "validate-customer-b-batch"
 
   filename         = data.archive_file.batch_validator.output_path
@@ -115,7 +121,8 @@ resource "aws_lambda_function" "batch_validator" {
 
   depends_on = [
     aws_iam_role_policy_attachment.lambda_basic_execution,
-    aws_iam_role_policy.lambda_s3_access
+    aws_iam_role_policy.lambda_s3_access,
+    aws_iam_role_policy.lambda_secret_access
   ]
 
   tags = {
@@ -160,4 +167,24 @@ resource "aws_s3_bucket_notification" "incoming_batch" {
   depends_on = [
     aws_lambda_permission.allow_s3
   ]
+}
+
+
+resource "aws_iam_role_policy" "lambda_secret_access" {
+  name = "LambdaCustomerSecretAccess"
+  role = aws_iam_role.lambda_validator.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+
+    Statement = [{
+      Effect = "Allow"
+
+      Action = [
+        "secretsmanager:GetSecretValue"
+      ]
+
+      Resource = aws_secretsmanager_secret.customer_api.arn
+    }]
+  })
 }

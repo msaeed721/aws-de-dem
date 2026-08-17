@@ -63,9 +63,11 @@ def lambda_handler(event, context):
         if "validation_errors" in source_headers:
             source_headers.remove("validation_errors")
 
+        # Write valid records to Bronze
         if valid_rows:
 
             output = io.StringIO()
+
             writer = csv.DictWriter(
                 output,
                 fieldnames=source_headers
@@ -85,6 +87,7 @@ def lambda_handler(event, context):
                 Body=output.getvalue()
             )
 
+        # Write invalid records to Quarantine
         if bad_rows:
 
             quarantine_headers = source_headers + [
@@ -118,6 +121,12 @@ def lambda_handler(event, context):
             len(valid_rows),
             len(bad_rows)
         )
+
+        if bad_rows:
+            logger.warning(
+                "QUARANTINE_ALERT customer=customer_b count=%d",
+                len(bad_rows)
+            )
 
     return {
         "statusCode": 200,

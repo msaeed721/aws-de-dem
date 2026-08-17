@@ -45,3 +45,6 @@ terraform.rc
 backup/
 
 lambda_validate_batch.zip
+
+__pycache__/
+*.pyc
